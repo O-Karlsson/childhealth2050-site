@@ -873,6 +873,19 @@ function indicatorNotes(keys, o, codes) {
           + ` ${rs[0].cycle} in ${rs[0].year}`;
       }).join("; ") + ". The values here are placed in the year tested.");
     }
+    // Cells OECD left blank in its all-15-year-olds table, which the warehouse fills by the
+    // identity OECD uses for the ones it prints (ADR-049). Said when one is on screen, so a
+    // constructed value is not read as OECD's own.
+    const held = (meta("math").withheld ?? []).filter((r) => codes?.includes(r.code));
+    if (held.length) {
+      const who = [...new Set(held.map((r) => r.code))].map((c) => {
+        const yrs = held.filter((r) => r.code === c).map((r) => String(r.year));
+        return `${L.locations[c]?.label ?? c}'s ${listOf(yrs)} value${yrs.length > 1 ? "s" : ""}`;
+      });
+      out.push(`OECD withheld ${listOf(who)}. ${held.length > 1 ? "They are" : "It is"}`
+        + ` constructed here the way OECD builds the values it publishes, from its coverage`
+        + ` index and the share of tested students below the minimum.`);
+    }
     out.push(`It counts every 15-year-old who is not in secondary school or was excluded`
       + ` from the sample as below the minimum, so a country enrolling more of its`
       + ` children can move the wrong way on this measure while its tested students`
@@ -894,6 +907,11 @@ function indicatorNotes(keys, o, codes) {
 
   const src = [];
   if (keys.some((k) => meta(k).family === "mortality")) src.push("UN IGME 2025 (mortality)");
+  // GBD supplies only the split by sex of neonatal mortality, which the 1–59 month split is
+  // derived from; both-sexes values are IGME's own. So it is credited when either is by sex.
+  if ((has("nnm") || has("pnm")) && (o.sexes ?? [o.sex]).some((s) => s !== "3")) {
+    src.push("IHME GBD 2023 (neonatal mortality by sex)");
+  }
   if (has("height")) src.push("NCD-RisC 2020 (height)");
   if (has("math") || has("math_students")) src.push("OECD PISA 2025 (math proficiency)");
   if (has("skills")) src.push("Gust, Hanushek & Woessmann 2024 (basic math skills)");
