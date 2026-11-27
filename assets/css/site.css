@@ -1,0 +1,667 @@
+/* Shared design system (placeholder). One stylesheet for the whole site. */
+
+:root {
+  --maxw: 960px;
+  --fg: #1b1b1b;
+  --muted: #5c5c5c;
+  --bg: #ffffff;
+  --line: rgba(0, 0, 0, 0.14);
+  --card: rgba(0, 0, 0, 0.03);
+  --accent: #12796a;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #e9e9e9;
+    --muted: #a2a2a2;
+    --bg: #141414;
+    --line: rgba(255, 255, 255, 0.16);
+    --card: rgba(255, 255, 255, 0.05);
+    --accent: #4cc9b4;
+  }
+}
+
+* { box-sizing: border-box; }
+html { color-scheme: light dark; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.wrap { max-width: var(--maxw); margin-inline: auto; padding: 1.5rem 1.25rem 4rem; }
+
+/* top navigation (shared across every page) */
+.site-nav { border-bottom: 1px solid var(--line); }
+.site-nav .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.4rem; padding-block: 0.9rem; }
+.site-nav .brand { font-weight: 700; text-decoration: none; margin-right: auto; }
+.site-nav a.tool { text-decoration: none; color: var(--muted); font-size: 0.95rem; }
+.site-nav a.tool:hover,
+.site-nav a.tool[aria-current="page"] { color: var(--fg); }
+
+/* placeholder banner */
+.placeholder {
+  margin: 1rem 0 2rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+h1 { font-size: 1.9rem; margin: 0.3rem 0 0.3rem; }
+.tagline { font-size: 1.1rem; color: var(--muted); margin: 0 0 1.6rem; }
+.back { display: inline-block; margin-bottom: 1rem; color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+.back:hover { color: var(--fg); }
+
+/* landing cards */
+.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+a.card {
+  display: block; padding: 1.2rem 1.4rem; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--card); text-decoration: none; color: inherit;
+  transition: border-color 0.15s, transform 0.15s;
+}
+a.card:hover { border-color: var(--fg); transform: translateY(-2px); }
+a.card h2 { margin: 0 0 0.3rem; font-size: 1.1rem; }
+a.card p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+/* country chips (profiles list) */
+.country-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.country-list a {
+  display: inline-block; padding: 0.45rem 0.95rem; border: 1px solid var(--line);
+  border-radius: 999px; text-decoration: none;
+}
+.country-list a:hover { border-color: var(--fg); }
+
+/* rendered markdown */
+.prose { max-width: 70ch; }
+.prose h1 { font-size: 1.6rem; }
+.prose h2 { font-size: 1.25rem; margin-top: 1.7rem; }
+.prose h3 { font-size: 1.05rem; margin-top: 1.3rem; }
+.prose a { color: var(--accent); }
+
+/* country selection: searchable tree of all countries (shared selector UI) */
+.search {
+  width: 100%; max-width: 22rem; margin: 0.4rem 0 1.6rem;
+  padding: 0.55rem 0.85rem; font: inherit; color: var(--fg);
+  background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+}
+.search:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.tree .region { margin: 0 0 1.4rem; }
+.tree .region[hidden] { display: none; }
+.tree .region > h2 {
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--muted); margin: 0 0 0.6rem;
+}
+.country-list a[hidden] { display: none; }
+.tree-empty { color: var(--muted); font-size: 0.9rem; }
+/* "has a deep dive" flag on a country in the tree */
+.badge {
+  display: inline-block; margin-left: 0.4rem; padding: 0.03rem 0.45rem;
+  font-size: 0.66rem; letter-spacing: 0.02em; border-radius: 999px;
+  border: 1px solid var(--accent); color: var(--accent); vertical-align: middle;
+}
+
+/* ---------------------------------------------------------------------------
+   Prospect chart (Future Trajectories)
+   Chart ink comes from tokens; only the marks carry colour, and the only colour
+   with meaning is status (fixed, never themed — see assets/js/prospect-chart.js).
+   No text in a figure is grey (ADR-043): it is all var(--fg), and hierarchy comes
+   from size, weight and capitals. Text is coloured only where the colour codes
+   something — a worsening value in red, a highlighted country in its series hue.
+   --------------------------------------------------------------------------- */
+:root {
+  --chart-surface: #ffffff;
+  --chart-grid: #e1e0d9;
+  --chart-axis: #c3c2b7;
+  --chart-muted: #898781;
+  --chart-mark: #0b0b0b;
+  /* Series identity, used only where more than one line shares a row. Checked for
+     colour-vision separation against both surfaces — see prospect-chart.js. */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  /* How hard the status bands read. They are the only status signal on a per-row scale,
+     so they carry more weight than a background usually would. */
+  --band-alpha: 0.2;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --chart-surface: #141414;
+    --chart-grid: #2c2c2a;
+    --chart-axis: #383835;
+    --chart-muted: #a3a19a;
+    --chart-mark: #f2f2f2;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    /* A saturated wash reads louder on a dark surface at the same alpha. */
+    --band-alpha: 0.16;
+  }
+}
+
+/* A figure leaving the page for a report always leaves light, whatever the reader's
+   theme: a downloaded dark figure is only discovered to be dark once it is in
+   someone's manuscript. assets/js/svg-standalone.js parks its clone inside this
+   before reading computed styles. Keep these values in step with the light :root
+   blocks above — they are the same tokens, restated where a media query cannot
+   reach them. */
+.figure-export-light {
+  --fg: #1b1b1b;
+  --muted: #5c5c5c;
+  --bg: #ffffff;
+  --line: rgba(0, 0, 0, 0.14);
+  --card: rgba(0, 0, 0, 0.03);
+  --accent: #12796a;
+  --chart-surface: #ffffff;
+  --chart-grid: #e1e0d9;
+  --chart-axis: #c3c2b7;
+  --chart-muted: #898781;
+  --chart-mark: #0b0b0b;
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --band-alpha: 0.2;
+}
+
+/* A figure leaving the page also leaves in Arial, while the page itself keeps the system
+   font. Named from the OS, a file came out in Segoe UI from Windows and SF Pro from a Mac,
+   so one paper's figures could mix typefaces; Arial is on every machine these files reach.
+   Set here, not in the serializer, so the export copy is also MEASURED in Arial: legends
+   and wrapped notes are laid out by getComputedTextLength while parked in this container.
+   Two selectors deep to beat `.prospect-svg text`, which sets the family with the size. */
+.figure-export-light svg,
+.figure-export-light svg text { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; }
+
+/* Download control under a figure. Sits quietly: it is the second thing anyone
+   wants from a chart, after reading it. */
+.fig-download {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem;
+  margin: 0.75rem 0 0;
+}
+.fig-download-label { font-size: 0.84rem; color: var(--muted); margin-right: 0.15rem; }
+.fig-download .chip { padding: 0.2rem 0.7rem; }
+.fig-download .chip[disabled] { opacity: 0.55; cursor: default; }
+.fig-download-status { font-size: 0.8rem; color: var(--muted); }
+.fig-download select {
+  font: inherit; font-size: 0.84rem; color: var(--fg); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 8px; padding: 0.15rem 0.4rem;
+}
+/* The Customize panels stack their options, so .opt is a block there. This control is a
+   single row, so its boxes sit inline with the picker and the button instead. */
+.fig-download-opt { font-size: 0.84rem; display: inline-flex; align-items: center; }
+
+/* Wide content scrolls inside its own box; the page body never scrolls sideways. */
+.figure { margin: 1.5rem 0 2.5rem; overflow-x: auto; }
+.figure > h2 { font-size: 1.05rem; margin: 0 0 0.15rem; }
+.figure .sub { color: var(--muted); font-size: 0.88rem; margin: 0 0 0.9rem; }
+
+/* A chart sizes itself to its host, so the host is where its width is capped. Left
+   unbounded it stretches to the full card and the rows end up long and thin — a wide
+   screen makes that possible, not desirable. In px rather than rem so it stays clear of
+   the chart's compact-layout threshold whatever the reader's base font size is. */
+.chart-host { max-width: 720px; }
+/* The small-multiples layout puts up to three panels side by side, so it is allowed the
+   full column. The 720px cap exists to stop ONE chart's rows becoming long and thin;
+   three panels sharing the width have the opposite problem. */
+.chart-host-wide { max-width: 100%; }
+
+.prospect-svg { display: block; max-width: 100%; height: auto; }
+.prospect-svg .track-line { stroke: var(--chart-axis); stroke-width: 2; stroke-linecap: round; }
+.prospect-svg .axis-rule,
+.prospect-svg .axis-tick { stroke: var(--chart-axis); stroke-width: 1; }
+.prospect-svg .mark-latest { fill: var(--chart-mark); stroke: var(--chart-surface); stroke-width: 2; }
+.prospect-svg .mark-proj path { stroke: var(--chart-surface); stroke-width: 2; paint-order: stroke; }
+.prospect-svg .mark-proj:focus { outline: none; }
+.prospect-svg .mark-proj:focus path { stroke: var(--accent); }
+.prospect-svg text { font: 12px/1 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.prospect-svg .row-label { fill: var(--fg); font-weight: 600; }
+/* Panel heading. Smaller than a row label, in spaced capitals: it groups rows, it does
+   not compete with them, and the rule below it is what does the separating. */
+.prospect-svg .panel-title {
+  fill: var(--fg); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.prospect-svg .panel-rule { stroke: var(--line); stroke-width: 1; }
+/* The legend baked into a downloaded figure. It is not on screen — the page draws its
+   legend in HTML — so these only ever paint through the export serializer. */
+.prospect-svg .legend-label { fill: var(--fg); font-size: 11px; }
+.prospect-svg .legend-strong { font-weight: 600; }
+.prospect-svg .row-sublabel { fill: var(--fg); font-size: 10.5px; }
+/* The title and the note paragraph, which live in HTML on the page and are rebuilt inside
+   the file when a reader ticks for them. Like the legend above, these only ever paint
+   through the export serializer. */
+.prospect-svg .svg-figure-title { fill: var(--fg); font-size: 14px; font-weight: 700; }
+.prospect-svg .svg-figure-note { fill: var(--fg); font-size: 11px; }
+/* The two numbers a reader actually takes off the chart — today's value and where the
+   trend lands — carry full ink. They are the content; muted grey read as furniture, and
+   the projected one sits over a coloured band, which is where grey lost most. */
+.prospect-svg .val-label,
+.prospect-svg .proj-label {
+  fill: var(--fg); font-variant-numeric: tabular-nums;
+  /* Knocked out of whatever is behind them. The projected value sits ON the track line,
+     which otherwise runs straight through the digits; painting a halo of the page ground
+     first is the same trick the dot and the arrowhead already use, and unlike a <rect> it
+     needs no text measurement. `paint-order` puts the stroke down before the fill, so the
+     glyphs themselves stay crisp. */
+  stroke: var(--chart-surface); stroke-width: 3.5; paint-order: stroke;
+}
+/* The goalpost was grey, to keep the column of mortality zeros from competing with the
+   values; it is black under ADR-043, which judged grey text harder to read than that. */
+.prospect-svg .goal-label { fill: var(--fg); font-variant-numeric: tabular-nums; }
+/* The projected value sits at the arrow's tip and is smaller than the latest value it is
+   read against, so the two never compete for the same glance. */
+.prospect-svg .proj-label { font-size: 11px; }
+/* Names a line where colour could not — so it has to carry over the chart. */
+.prospect-svg .track-key { fill: var(--fg); font-weight: 700; }
+.prospect-svg .axis-label,
+.prospect-svg .axis-title { fill: var(--fg); }
+.prospect-svg .axis-label { font-variant-numeric: tabular-nums; }
+.prospect-svg .row-nodata { fill: var(--fg); }
+
+/* The distribution figures. The curve is the population of countries and the line is the
+   bar they have to clear, so the line has to win the contrast: it is the only mark a
+   reader measures anything against. */
+.prospect-svg .dist-area { fill: var(--chart-grid); }
+.prospect-svg .dist-line { fill: none; stroke: var(--chart-axis); stroke-width: 1.5; }
+.prospect-svg .dist-bar { fill: var(--chart-grid); stroke: var(--chart-axis); stroke-width: 0.75; }
+.prospect-svg .dist-threshold {
+  stroke: var(--chart-mark); stroke-width: 1.5; stroke-dasharray: 4 3;
+}
+/* Knocked out of the curve behind them, the same trick the value labels use — these sit
+   inside the plot on purpose, where the count is read against the line rather than in a
+   key somewhere else. */
+/* The tick that marks the required pace is the panel's reference value, so it is inked
+   like a reading rather than like furniture. */
+.prospect-svg .dist-req-tick { stroke: var(--chart-mark); stroke-width: 1.5; }
+.prospect-svg .dist-req-label { font-weight: 700; }
+.prospect-svg .dist-count text {
+  fill: var(--fg); font-size: 10.5px; font-variant-numeric: tabular-nums;
+  stroke: var(--chart-surface); stroke-width: 3; paint-order: stroke;
+}
+/* The Good/Bad arrows over a comparison figure. Their fills are the status colours, set as
+   attributes; the label is white on them, so it has to be bold to hold at 11px. */
+.prospect-svg .dir-arrow { stroke: none; }
+.prospect-svg .dir-label { fill: #ffffff; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+.prospect-svg .band { fill-opacity: var(--band-alpha); }
+/* The page ground, laid over the status field behind a row that has no goal to be judged by. */
+.prospect-svg .band-knockout { fill: var(--chart-surface); }
+/* A country picked out inside a distribution. The accent hue rather than a status colour:
+   it says "this one", not "on track". The name is knocked out of the curve like the counts. */
+.prospect-svg .dist-hl, .prospect-legend .dist-hl { stroke: var(--series-1); stroke-width: 1.5; }
+.prospect-svg .dist-hl-dot, .prospect-legend .dist-hl-dot { fill: var(--series-1); }
+.prospect-svg .dist-hl-bg { fill: var(--chart-surface); }
+/* A highlighted country that is placed but not named: the same hue, held back. */
+.prospect-svg .dist-hl.quiet, .prospect-legend .dist-hl.quiet { stroke-opacity: 0.45; stroke-width: 1.25; }
+.prospect-svg .dist-hl-dot.quiet, .prospect-legend .dist-hl-dot.quiet { fill-opacity: 0.45; }
+.prospect-svg .dist-hl-label {
+  fill: var(--series-1); font-size: 10px; font-weight: 700;
+  stroke: var(--chart-surface); stroke-width: 3; paint-order: stroke;
+}
+.prospect-svg .dist-count-n {
+  fill: var(--fg); font-size: 10.5px;
+  stroke: var(--chart-surface); stroke-width: 3; paint-order: stroke;
+}
+.prospect-svg .row-nodata { font-style: italic; }
+.prospect-svg .worsening { fill: #d03b3b; }
+.prospect-svg .proj-connector { stroke-width: 2; stroke-linecap: butt; }
+.prospect-svg .proj-arrow { stroke: var(--chart-surface); stroke-width: 1.5; paint-order: stroke; }
+
+.prospect-legend {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.6rem;
+  margin: 0.7rem 0 0; font-size: 0.83rem; color: var(--fg);
+}
+.prospect-legend .legend-group { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+.prospect-legend .key { display: inline-flex; align-items: center; gap: 0.35rem; }
+.prospect-legend .key strong { font-weight: 600; }
+.prospect-legend svg { color: var(--chart-mark); }
+.prospect-legend .mark-latest { fill: var(--chart-mark); }
+/* The legend swatch for a threshold line. The chart's own rule is scoped under
+   .prospect-svg, which the inline swatch is not, so the dash pattern is repeated here for
+   the same reason .mark-latest above is — keep the two in step if either moves. */
+.prospect-legend .dist-threshold {
+  stroke: var(--chart-mark); stroke-width: 1.5; stroke-dasharray: 4 3;
+}
+/* Serving a run of charts rather than sitting under one, so it leads instead of trails. */
+.prospect-legend.shared { margin: 0 0 1.3rem; }
+
+/* .table-view is the distribution figure's twin of .prospect-table. It had no rules of its
+   own and was rendering as unstyled body text next to a styled one; sharing the selector
+   is what stops the two "View as table" toggles looking like different features. */
+.prospect-table, .table-view { margin-top: 0.9rem; font-size: 0.85rem; }
+.prospect-table summary, .table-view summary { cursor: pointer; color: var(--muted); }
+.prospect-table table, .table-view table {
+  border-collapse: collapse; width: 100%; margin-top: 0.6rem;
+}
+.table-view th, .table-view td,
+.prospect-table th, .prospect-table td {
+  text-align: left; padding: 0.3rem 0.6rem 0.3rem 0; border-bottom: 1px solid var(--line);
+}
+.prospect-table .num, .table-view .num {
+  text-align: right; font-variant-numeric: tabular-nums;
+}
+/* Matches the chart's panel heading, so the table reads as the same grouping. */
+.prospect-table .panel-row th {
+  padding-top: 0.7rem; color: var(--muted); font-size: 0.78rem;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.prospect-table .muted { color: var(--muted); }
+
+/* location picker: search + continent tree, multi-select (ADR-008) */
+.picker-block { margin: 0 0 1.6rem; }
+.block-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--muted); margin: 0 0 0.5rem; }
+/* The whole picker is one collapsed control: at rest a single line, so a figure sits
+   near the top of the page rather than below a permanently open 250-row tree. Browsing
+   still has to be obvious — the summary offers it in words, since a good part of the
+   value here is the unusual regional and income-group aggregates nobody would think to
+   type. */
+.loc-browse {
+  max-width: 30rem; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--card);
+}
+.loc-browse > summary {
+  cursor: pointer; list-style: none; padding: 0.5rem 0.9rem; font-size: 0.9rem;
+  display: flex; gap: 0.8rem; border-radius: 9px;
+}
+.loc-browse > summary::-webkit-details-marker { display: none; }
+.loc-browse > summary::after { content: "▾"; color: var(--muted); margin-left: auto; }
+.loc-browse[open] > summary::after { content: "▴"; }
+.loc-browse > summary:hover { background: var(--line); }
+.loc-browse[open] > summary { border-bottom: 1px solid var(--line); border-radius: 9px 9px 0 0; }
+.loc-browse .all-count { font-variant-numeric: tabular-nums; }
+.loc-browse .panel { padding: 0.7rem 0.8rem 0.8rem; }
+.locpicker .search { width: 100%; max-width: none; margin: 0 0 0.6rem; }
+.locpicker .tree { max-height: 15rem; overflow-y: auto; }
+.loc-group > summary { cursor: pointer; padding: 0.3rem 0; font-size: 0.9rem; }
+.loc-group[hidden] { display: none; }
+.loc-group .count { color: var(--muted); font-size: 0.78rem; }
+.loc-list {
+  display: grid; gap: 0.1rem 0.8rem; padding: 0.2rem 0 0.5rem 0.9rem;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+}
+.loc { font-size: 0.88rem; display: block; }
+.loc[hidden] { display: none; }
+.loc input { margin-right: 0.35rem; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0 0 0.55rem; }
+.chips-empty { color: var(--muted); font-size: 0.85rem; }
+.chip {
+  font: inherit; font-size: 0.84rem; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.25rem 0.6rem; border-radius: 999px;
+  border: 1px solid var(--accent); background: transparent; color: var(--fg);
+}
+.chip span { color: var(--muted); }
+.chip:hover { background: var(--card); }
+.chip:hover span { color: var(--fg); }
+.chips.small { margin: 0.45rem 0 0; }
+
+/* Collapsible figure sections. Each is a distinct card rather than a rule-separated
+   run of text, because the page grows by stacking these and a collapsed one has to
+   read as its own object at a glance. */
+.figure-section {
+  border: 1px solid var(--line); border-radius: 12px; margin: 0 0 0.9rem;
+}
+.figure-section > summary {
+  cursor: pointer; list-style: none; border-radius: 11px;
+  padding: 0.8rem 1rem 0.8rem 0.85rem;
+  border-left: 4px solid var(--accent); background: var(--card);
+  display: grid; grid-template-columns: 1.2rem 1fr; gap: 0 0.4rem; align-items: baseline;
+}
+.figure-section[open] > summary {
+  border-radius: 11px 11px 0 0; border-bottom: 1px solid var(--line);
+}
+.figure-section > summary:hover { background: var(--line); }
+.figure-section > summary::-webkit-details-marker { display: none; }
+.figure-section > summary::before {
+  content: "▸"; color: var(--accent); font-size: 0.9rem; grid-row: span 2;
+}
+.figure-section[open] > summary::before { content: "▾"; }
+.figure-section .sec-title { font-weight: 700; font-size: 1.1rem; }
+.figure-section .sec-sub { color: var(--muted); font-size: 0.86rem; grid-column: 2; }
+.sec-body { padding: 1.1rem 1rem 1.5rem; overflow-x: auto; }
+/* One location per block. Consecutive blocks are near-identical grids of the same five
+   rows, so without a hard break the eye runs one country's chart into the next; the rule
+   and the name are what say "new country", not the gap alone. */
+.fig-block { margin: 0; }
+.fig-block + .fig-block {
+  margin-top: 2rem; padding-top: 1.7rem; border-top: 1px solid var(--line);
+}
+.fig-block-title {
+  font-size: 1.1rem; font-weight: 700; margin: 0 0 0.6rem;
+  padding-left: 0.6rem; border-left: 3px solid var(--accent);
+}
+
+/* per-figure controls, sitting with the figure they scope */
+.fig-controls { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; margin: 0 0 0.8rem; }
+.fig-controls > div { flex: 1 1 15rem; min-width: 0; }
+.fig-controls label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.2rem; }
+.fig-controls select, .fig-controls input[type="search"] {
+  font: inherit; color: var(--fg); background: var(--bg); width: 100%; max-width: 100%;
+  border: 1px solid var(--line); border-radius: 8px; padding: 0.4rem 0.65rem;
+}
+
+/* customization: tucked behind a button (PLAN.md §1.1) */
+.controls { display: flex; flex-wrap: wrap; gap: 0.6rem 1rem; align-items: flex-end; margin: 0 0 1.2rem; }
+.controls > div { flex: 1 1 11rem; min-width: 0; }
+@media (max-width: 30rem) { .controls > div { flex-basis: 100%; } }
+.controls label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.2rem; }
+.controls input[type="search"], .controls select {
+  font: inherit; color: var(--fg); background: var(--bg); width: 100%; max-width: 100%;
+  border: 1px solid var(--line); border-radius: 8px; padding: 0.45rem 0.7rem;
+}
+.customize { border: 1px solid var(--line); border-radius: 10px; background: var(--card); }
+.customize > summary {
+  cursor: pointer; padding: 0.45rem 0.9rem; font-size: 0.9rem; list-style: none;
+}
+.customize > summary::-webkit-details-marker { display: none; }
+.customize > summary::before { content: "⚙ "; }
+.customize[open] > summary { border-bottom: 1px solid var(--line); }
+.customize .panel { padding: 0.9rem; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.customize fieldset { border: 0; margin: 0; padding: 0; }
+.customize legend { font-size: 0.78rem; color: var(--muted); padding: 0; margin-bottom: 0.35rem; }
+.customize .opt { display: block; font-size: 0.88rem; margin: 0.15rem 0; }
+.customize .opt input { margin-right: 0.4rem; }
+/* the per-figure variant is deliberately quieter than a page-level control */
+.customize.small { display: inline-block; margin: 0 0 0.9rem; }
+.customize.small > summary { font-size: 0.82rem; color: var(--muted); padding: 0.3rem 0.7rem; }
+.customize.small .panel { padding: 0.8rem; }
+
+/* The twin of Customize, under the figure instead of above it: Customize holds everything
+   that changes what the chart SHOWS, this holds everything a reader does WITH it — the
+   numbers behind it and a copy to take away. Same shell so the two read as a pair.
+   Closed it is a pill the width of its own label; open it takes the full column, because
+   a table inside a shrink-to-fit box sizes to its own content and would push the page
+   sideways. */
+.fig-options {
+  border: 1px solid var(--line); border-radius: 10px; background: var(--card);
+  display: inline-block; max-width: 100%; margin: 0.75rem 0 0;
+}
+.fig-options[open] { display: block; }
+.fig-options > summary {
+  cursor: pointer; padding: 0.3rem 0.7rem; font-size: 0.82rem; color: var(--muted);
+  list-style: none;
+}
+.fig-options > summary::-webkit-details-marker { display: none; }
+.fig-options > summary::before { content: "▸ "; }
+.fig-options[open] > summary { border-bottom: 1px solid var(--line); }
+.fig-options[open] > summary::before { content: "▾ "; }
+/* The site rule, applied here: wide content scrolls inside its own box and the page body
+   never scrolls sideways. The ranking-style tables in here have up to seven columns, and
+   on a narrow screen one of them will not fit. */
+.fig-options > .panel { padding: 0.8rem; overflow-x: auto; }
+/* Both controls inside sit flush: the panel already supplies the padding, and the first
+   one carrying its own top margin would double it. */
+.fig-options > .panel > :first-child { margin-top: 0; }
+.customize.small .note { font-size: 0.76rem; margin: 0.35rem 0 0; }
+
+.note { font-size: 0.82rem; color: var(--muted); max-width: 68ch; }
+/* A figure with nothing to draw. Given room, so an empty state reads as a state rather
+   than as a chart that failed to appear. */
+.fig-empty { padding: 2.5rem 0; font-style: italic; }
+
+/* profile page building blocks */
+.profile-section { margin: 1.8rem 0; }
+.profile-section > h2 { font-size: 1.1rem; margin: 0 0 0.6rem; }
+/* "this text is an AI-generated draft" notice */
+.ai-banner {
+  margin: 0 0 1.2rem; padding: 0.6rem 0.9rem;
+  border: 1px solid var(--accent); border-left-width: 4px; border-radius: 8px;
+  background: var(--card); font-size: 0.85rem; color: var(--fg);
+}
+.ai-banner strong { color: var(--accent); }
+/* prominent link to a country's deep dive */
+.deepdive-link {
+  display: inline-block; margin: 0.3rem 0; padding: 0.7rem 1.1rem;
+  border: 1px solid var(--accent); border-radius: 10px;
+  background: var(--accent); color: #ffffff; text-decoration: none; font-weight: 600;
+}
+.deepdive-link:hover { filter: brightness(1.07); }
+@media (prefers-color-scheme: dark) { .deepdive-link { color: #05231f; } }
+
+/* ---------------------------------------------------------------------------
+   Policy episodes (CPI)
+   Status colours are the prospect chart's three, reused deliberately: an
+   attainment verdict and a 2050 verdict mean the same kind of thing to a reader.
+   --------------------------------------------------------------------------- */
+:root { --ok: #0ca30c; --warn: #b07d05; --bad: #d03b3b; }
+@media (prefers-color-scheme: dark) { :root { --ok: #35bd35; --warn: #fab219; } }
+
+.pilot-banner {
+  margin: 0 0 1.6rem; padding: 0.7rem 0.95rem;
+  border: 1px dashed var(--line); border-radius: 8px;
+  background: var(--card); font-size: 0.87rem; color: var(--muted);
+}
+.pilot-banner strong { color: var(--fg); }
+.lede { font-size: 1.02rem; max-width: 70ch; }
+
+.ep-id {
+  font: 600 0.72rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.04em; color: var(--muted);
+}
+
+/* an episode in the list */
+.episode-card {
+  display: flex; flex-direction: column; gap: 0.35rem;
+  padding: 0.9rem 1rem; border: 1px solid var(--line); border-radius: 10px;
+  text-decoration: none; color: inherit; background: var(--card);
+}
+.episode-card:hover { border-color: var(--fg); }
+.episode-card strong { font-size: 1.02rem; line-height: 1.3; }
+.episode-card .ep-meta { font-size: 0.82rem; color: var(--muted); }
+.episode-card .ep-summary { font-size: 0.88rem; color: var(--fg); }
+.episode-card .ep-result { font-size: 0.8rem; color: var(--accent); font-weight: 600; }
+.badge.stage { align-self: flex-start; margin-left: 0; border-color: var(--muted); color: var(--muted); }
+
+.frame-h { font-size: 1.1rem; margin: 2.4rem 0 0.3rem; }
+.frame-note, .findings { font-size: 0.88rem; color: var(--muted); }
+.findings { max-width: 70ch; }
+.findings strong { color: var(--fg); }
+
+/* The figure notes. They run to a dozen sentences on the five-indicator figure, which
+   pushed the next section off the screen, so they fold away — open is one click and the
+   text is unchanged, including in a download, which reads the paragraph off the page. */
+.fig-notes { margin: 0.6rem 0 0; }
+.fig-notes > summary {
+  cursor: pointer; color: var(--muted); font-size: 0.85rem; list-style: none;
+}
+.fig-notes > summary::-webkit-details-marker { display: none; }
+.fig-notes > summary::before { content: "▸ "; }
+.fig-notes[open] > summary::before { content: "▾ "; }
+.fig-notes > summary:hover { color: var(--fg); }
+.fig-notes .note { margin-top: 0.4rem; }
+
+/* The ranking table. Two hundred rows, so it gets its own scroll box and a sticky head:
+   a reader who has scrolled to rank 140 still needs to know which column is which. */
+.rank-scroll { max-height: 32rem; overflow: auto; margin-top: 0.7rem; }
+.rank-scroll table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+.rank-scroll th, .rank-scroll td {
+  text-align: left; padding: 0.3rem 0.6rem 0.3rem 0; border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.rank-scroll thead th {
+  position: sticky; top: 0; background: var(--card); z-index: 1;
+  font-size: 0.78rem; color: var(--muted); vertical-align: bottom;
+}
+.rank-scroll .num { text-align: right; font-variant-numeric: tabular-nums; }
+.rank-scroll .rank { color: var(--muted); width: 2.5rem; }
+.rank-scroll th.sortable { cursor: pointer; }
+.rank-scroll th.sortable:hover, .rank-scroll th.sortable:focus { color: var(--fg); }
+.rank-scroll th.sorted { color: var(--fg); }
+/* A country moving away from its goal, in the chart's own worsening red. */
+.rank-scroll .wrong { color: var(--bad); }
+.rank-scroll .muted { color: var(--muted); }
+
+/* Wide tables scroll in their own box — the page body never scrolls sideways. */
+.table-scroll { overflow-x: auto; margin: 0.6rem 0 1.6rem; }
+.policy-table { border-collapse: collapse; width: 100%; font-size: 0.85rem; min-width: 34rem; }
+.policy-table th, .policy-table td {
+  border-bottom: 1px solid var(--line); padding: 0.5rem 0.7rem 0.5rem 0;
+  text-align: left; vertical-align: top;
+}
+.policy-table thead th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+.policy-table .cell-note { display: block; margin-top: 0.25rem; color: var(--muted); font-size: 0.92em; }
+.matrix { min-width: 30rem; }
+.matrix tbody th { color: var(--muted); font-weight: 600; }
+.matrix td { text-align: center; color: var(--muted); }
+.matrix td.filled { background: var(--card); }
+.matrix td a { color: var(--accent); font-weight: 600; text-decoration: none; }
+
+.attain {
+  display: inline-block; white-space: nowrap; padding: 0.05rem 0.5rem;
+  font-size: 0.75rem; border-radius: 999px; border: 1px solid currentColor;
+}
+.attain.good { color: var(--ok); }
+.attain.warn { color: var(--warn); }
+.attain.bad  { color: var(--bad); }
+.attain.none { color: var(--muted); }
+
+/* role is the causal firewall made visible — see ADR-018 */
+.role { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.role.target  { color: var(--fg); font-weight: 700; }
+.role.context { color: var(--muted); }
+
+.policy-details { border-top: 1px solid var(--line); padding: 0.7rem 0; }
+.policy-details > summary { cursor: pointer; font-weight: 600; font-size: 0.95rem; }
+.policy-details h3 { font-size: 0.95rem; margin: 1.2rem 0 0.2rem; }
+.policy-details ul, .sources { font-size: 0.85rem; max-width: 70ch; }
+.inline-control { display: inline-block; margin-bottom: 0.8rem; font-size: 0.85rem; color: var(--muted); }
+.inline-control select {
+  margin-left: 0.4rem; padding: 0.25rem 0.4rem; font: inherit;
+  color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px;
+}
+
+/* the timeline figure */
+.policy-svg { display: block; max-width: 100%; height: auto; }
+.policy-svg text { font: 12px/1 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.policy-svg .grid { stroke: var(--chart-grid); stroke-width: 1; }
+.policy-svg .axis-rule, .policy-svg .axis-tick { stroke: var(--chart-axis); stroke-width: 1; }
+.policy-svg .axis-label { fill: var(--fg); font-size: 11px; font-variant-numeric: tabular-nums; }
+.policy-svg .value-line { stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.policy-svg .value-label { fill: var(--fg); font-size: 11px; font-weight: 600; }
+/* Black like all figure text (ADR-043); the line it names stays grey and dashed, which is
+   what codes it as context (ADR-018), and the words say so outright. */
+.policy-svg .context-tag { fill: var(--fg); font-weight: 400; font-style: italic; }
+.policy-svg .ep-title { fill: var(--fg); font-size: 11px; font-weight: 600; }
+.policy-svg .ep-bar { fill-opacity: 0.55; }
+.policy-svg .ep-milestone { cursor: default; }
+.policy-svg .ep-stem { stroke-width: 1.5; }
+.policy-svg .ep-milestone-n { fill: var(--chart-surface); font-size: 9px; font-weight: 700; }
+
+.policy-key { margin: 0.7rem 0 0.2rem; padding-left: 1.4rem; font-size: 0.82rem; color: var(--fg); }
+.policy-key li { margin: 0.15rem 0; }
+.policy-key .dot {
+  display: inline-block; width: 0.55rem; height: 0.55rem; border-radius: 999px;
+  margin-right: 0.4rem; vertical-align: baseline;
+}
+.policy-source { font-size: 0.8rem; color: var(--muted); max-width: 70ch; margin: 0.5rem 0 0; }
+
+/* the policy block on a country profile — rendered only where episodes exist */
+.policy-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
+.policy-list a {
+  display: block; padding: 0.6rem 0.8rem; border: 1px solid var(--line);
+  border-radius: 8px; text-decoration: none; color: inherit;
+}
+.policy-list a:hover { border-color: var(--fg); }
+.policy-list .ep-meta { display: block; font-size: 0.8rem; color: var(--muted); margin-top: 0.15rem; }

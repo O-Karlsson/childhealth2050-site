@@ -1,0 +1,1339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Future Trajectories — Child Health 2050</title>
+  <meta name="description" content="Prospects for halving the distance to the target on five child health indicators by 2050, if recent trends continue." />
+  <meta property="og:title" content="Future Trajectories — Child Health 2050" />
+  <meta property="og:description" content="Prospects for halving the distance to the target on five child health indicators by 2050, if recent trends continue." />
+  <link rel="stylesheet" href="../assets/css/site.css" />
+</head>
+<body>
+  <nav class="site-nav"><div class="wrap">
+    <a class="brand" href="../">Child Health 2050</a>
+    <a class="tool" href="../trajectories/" aria-current="page">Future Trajectories</a>
+  </div></nav>
+
+  <main class="wrap">
+    <h1>Future Trajectories</h1>
+    <p class="tagline">Where a country is heading — the 2050 outlook.</p>
+
+    <!-- Location selection sits above every figure and scopes all of them. Each
+         figure then carries only its own display options. -->
+    <section class="picker-block">
+      <h2 class="block-title">Locations</h2>
+      <div id="picker"></div>
+    </section>
+
+    <!-- Figures are collapsible so the page stays navigable as more are added. -->
+    <details class="figure-section" id="sec1" open>
+      <summary><span class="sec-title">Five indicators, one country</span>
+        <span class="sec-sub">most recent value and the 2050 outlook</span></summary>
+      <div class="sec-body">
+        <details class="customize small">
+          <summary>Customize</summary>
+          <div class="panel">
+            <fieldset data-role="sexes">
+              <legend>Sex</legend>
+              <label class="opt"><input type="checkbox" value="3" checked /> Both</label>
+              <label class="opt"><input type="checkbox" value="1" /> Male</label>
+              <label class="opt"><input type="checkbox" value="2" /> Female</label>
+            </fieldset>
+            <fieldset data-role="trends">
+              <legend>Trend the 2050 value uses</legend>
+              <label class="opt"><input type="checkbox" value="t10" checked /> Past 10 years</label>
+              <label class="opt"><input type="checkbox" value="t5" /> Past 5 years</label>
+              <label class="opt"><input type="checkbox" value="t5_10" /> 5–10 years ago</label>
+              <label class="opt"><input type="checkbox" value="t10_15" /> 10–15 years ago</label>
+            </fieldset>
+            <fieldset data-role="extras">
+              <legend>Supplementary outcomes</legend>
+              <p class="note">Off by default. These sit outside the five and are not part
+                of the headline goal; each carries its own caveat in the note below.</p>
+            </fieldset>
+            <fieldset data-role="scale">
+              <legend>Axis</legend>
+              <label class="opt"><input type="radio" name="scale1" value="linear" checked /> Linear</label>
+              <label class="opt"><input type="radio" name="scale1" value="log" /> Log</label>
+              <p class="note">A log axis can't reach zero, so it ends at half the best
+                value any country currently reaches.</p>
+            </fieldset>
+            <fieldset data-role="layout">
+              <legend>Layout</legend>
+              <label class="opt"><input type="radio" name="layout1" value="separate" checked />
+                One figure per location</label>
+              <label class="opt"><input type="radio" name="layout1" value="grid" />
+                One figure, a panel per location</label>
+              <label class="opt"><input type="radio" name="layout1" value="indicators" />
+                One figure, a panel per indicator</label>
+              <p class="note">A panel per location gives each one its own small chart of all
+                five indicators: a single column up to three locations, two columns up to six,
+                three beyond that. A panel per indicator turns that around — five panels, two
+                to a row and one on the last, with the selected locations as the rows inside
+                each. Either way it is one figure: one legend, one download, one table.</p>
+            </fieldset>
+          </div>
+        </details>
+        <div id="fig1"></div>
+        <details class="fig-notes">
+          <summary>Notes</summary>
+          <p class="note" id="fig1-note"></p>
+        </details>
+      </div>
+    </details>
+
+    <!-- Collapsed by default: the five-indicator view above is the headline, and the
+         page will keep gaining sections like this one. -->
+    <details class="figure-section" id="sec2">
+      <summary><span class="sec-title">One indicator, many countries</span>
+        <span class="sec-sub">the selection compared on a single scale</span></summary>
+      <div class="sec-body">
+        <div class="fig-controls">
+          <div>
+            <label for="outcome2">Indicator</label>
+            <select id="outcome2"></select>
+          </div>
+          <div>
+            <label for="comparators">Comparator countries</label>
+            <input id="comparators" type="search" list="complist" autocomplete="off"
+                   placeholder="Add a country…" />
+            <datalist id="complist"></datalist>
+            <datalist id="countrylist"></datalist>
+            <div class="chips small" id="compchips"></div>
+          </div>
+        </div>
+        <details class="customize small">
+          <summary>Customize</summary>
+          <div class="panel">
+            <fieldset data-role="sexes">
+              <legend>Sex</legend>
+              <label class="opt"><input type="checkbox" value="3" checked /> Both</label>
+              <label class="opt"><input type="checkbox" value="1" /> Male</label>
+              <label class="opt"><input type="checkbox" value="2" /> Female</label>
+            </fieldset>
+            <fieldset data-role="trends">
+              <legend>Trend the 2050 value uses</legend>
+              <label class="opt"><input type="checkbox" value="t10" checked /> Past 10 years</label>
+              <label class="opt"><input type="checkbox" value="t5" /> Past 5 years</label>
+              <label class="opt"><input type="checkbox" value="t5_10" /> 5–10 years ago</label>
+              <label class="opt"><input type="checkbox" value="t10_15" /> 10–15 years ago</label>
+            </fieldset>
+            <fieldset data-role="extras">
+              <legend>Supplementary outcomes</legend>
+              <p class="note">Off by default. These sit outside the five and are not part
+                of the headline goal; each carries its own caveat in the note below.</p>
+            </fieldset>
+            <fieldset data-role="rowScale">
+              <legend>Line starts at</legend>
+              <label class="opt"><input type="radio" name="rowscale" value="shared" checked />
+                Highest value shown</label>
+              <label class="opt"><input type="radio" name="rowscale" value="own" />
+                Each location's own value</label>
+              <p class="note">One shared scale compares levels; per-location scales
+                compare progress toward the goal.</p>
+            </fieldset>
+            <fieldset data-role="scale">
+              <legend>Axis</legend>
+              <label class="opt"><input type="radio" name="scale2" value="linear" checked /> Linear</label>
+              <label class="opt"><input type="radio" name="scale2" value="log" /> Log</label>
+            </fieldset>
+            <fieldset data-role="panels">
+              <legend>Panels</legend>
+              <label class="opt"><input type="radio" name="panels2" value="none" checked /> None</label>
+              <label class="opt"><input type="radio" name="panels2" value="mortTercile" />
+                Mortality tercile</label>
+              <p class="note">Terciles of the probability of dying before age 20, cut on
+                countries with more than a million people; every location is placed
+                against those cuts.</p>
+            </fieldset>
+            <fieldset data-role="layout">
+              <legend>Layout</legend>
+              <label class="opt"><input type="radio" name="layout2" value="separate" checked />
+                One indicator</label>
+              <label class="opt"><input type="radio" name="layout2" value="indicators" />
+                All five, a panel each</label>
+              <p class="note">All five draws the same rows once per indicator — five panels,
+                two to a row and one on the last — so the selection reads across every
+                indicator in one figure, with one legend, one download and one table. The
+                Indicator picker and the tercile panels have nothing to act on there and are
+                disabled. Line starts at still applies, and gives each panel its own axis in
+                its own units.</p>
+            </fieldset>
+          </div>
+        </details>
+        <div id="fig2" class="chart-host"></div>
+        <!-- Outside #fig2, which prospectChart clears on every render. -->
+        <details class="fig-notes">
+          <summary>Notes</summary>
+          <p class="note" id="fig2-note"></p>
+        </details>
+      </div>
+    </details>
+
+    <!-- The first figure that is not about a selected location: it draws every country
+         at once, so the picker above does not scope it. -->
+    <details class="figure-section" id="sec3">
+      <summary><span class="sec-title">How fast countries are moving</span>
+        <span class="sec-sub">average annual rate of improvement against the pace the goal needs</span></summary>
+      <div class="sec-body">
+        <!-- One list of highlighted countries, shared with the section below, so a reader who
+             picked out Nepal here finds it picked out there too. It is its own control rather
+             than the location picker: these figures draw every country whatever is picked
+             (ADR-029), and the picker's default Nigeria would otherwise appear uninvited. -->
+        <div class="fig-controls">
+          <div>
+            <label for="hl3">Highlight countries</label>
+            <input id="hl3" class="hl-input" type="search" list="countrylist" autocomplete="off"
+                   placeholder="Add a country…" />
+            <div class="chips small hl-chips"></div>
+          </div>
+        </div>
+        <details class="customize small">
+          <summary>Customize</summary>
+          <div class="panel">
+            <fieldset data-role="display">
+              <legend>Show as</legend>
+              <label class="opt"><input type="radio" name="display3" value="density" checked />
+                Smoothed distribution</label>
+              <label class="opt"><input type="radio" name="display3" value="bins" />
+                Binned counts</label>
+              <p class="note">Bins are placed so the pace the goal needs falls on a bin
+                edge — a bar straddling it would mix on-track and off-track countries into
+                one column.</p>
+            </fieldset>
+            <fieldset data-role="sex3">
+              <legend>Sex</legend>
+              <label class="opt"><input type="radio" name="sex3" value="3" checked /> Both</label>
+              <label class="opt"><input type="radio" name="sex3" value="1" /> Male</label>
+              <label class="opt"><input type="radio" name="sex3" value="2" /> Female</label>
+              <p class="note">One at a time here: three curves and three thresholds in a
+                panel this size is not a smaller figure but an unreadable one.</p>
+            </fieldset>
+            <fieldset data-role="window3">
+              <legend>Trend the change is measured over</legend>
+              <label class="opt"><input type="radio" name="window3" value="t10" checked /> Past 10 years</label>
+              <label class="opt"><input type="radio" name="window3" value="t5" /> Past 5 years</label>
+              <label class="opt"><input type="radio" name="window3" value="t5_10" /> 5–10 years ago</label>
+              <label class="opt"><input type="radio" name="window3" value="t10_15" /> 10–15 years ago</label>
+            </fieldset>
+            <fieldset data-role="extras"></fieldset>
+          </div>
+        </details>
+        <div id="fig3" class="chart-host"></div>
+        <details class="fig-notes">
+          <summary>Notes</summary>
+          <p class="note" id="fig3-note"></p>
+        </details>
+      </div>
+    </details>
+
+    <!-- The same panels as sec3, over the latest value rather than the rate: where countries
+         are, not how fast they move. Like sec3 it draws every country. -->
+    <details class="figure-section" id="sec5">
+      <summary><span class="sec-title">Where countries are now</span>
+        <span class="sec-sub">the latest value across countries</span></summary>
+      <div class="sec-body">
+        <div class="fig-controls">
+          <div>
+            <label for="hl5">Highlight countries</label>
+            <input id="hl5" class="hl-input" type="search" list="countrylist" autocomplete="off"
+                   placeholder="Add a country…" />
+            <div class="chips small hl-chips"></div>
+          </div>
+        </div>
+        <details class="customize small">
+          <summary>Customize</summary>
+          <div class="panel">
+            <fieldset data-role="display">
+              <legend>Show as</legend>
+              <label class="opt"><input type="radio" name="display5" value="density" checked />
+                Smoothed distribution</label>
+              <label class="opt"><input type="radio" name="display5" value="bins" />
+                Binned counts</label>
+            </fieldset>
+            <fieldset data-role="sex5">
+              <legend>Sex</legend>
+              <label class="opt"><input type="radio" name="sex5" value="3" checked /> Both</label>
+              <label class="opt"><input type="radio" name="sex5" value="1" /> Male</label>
+              <label class="opt"><input type="radio" name="sex5" value="2" /> Female</label>
+            </fieldset>
+            <fieldset data-role="extras"></fieldset>
+          </div>
+        </details>
+        <div id="fig5" class="chart-host"></div>
+        <details class="fig-notes">
+          <summary>Notes</summary>
+          <p class="note" id="fig5-note"></p>
+        </details>
+      </div>
+    </details>
+
+    <!-- Every country on one indicator. Like sec3 it draws them all, so the picker above
+         does not scope it either. -->
+    <details class="figure-section" id="sec4">
+      <summary><span class="sec-title">Countries ranked</span>
+        <span class="sec-sub">how fast each is moving, and how long its goal would take</span></summary>
+      <div class="sec-body">
+        <div class="fig-controls">
+          <div>
+            <label for="outcome4">Indicator</label>
+            <select id="outcome4"></select>
+          </div>
+        </div>
+        <details class="customize small">
+          <summary>Customize</summary>
+          <div class="panel">
+            <fieldset data-role="sex4">
+              <legend>Sex</legend>
+              <label class="opt"><input type="radio" name="sex4" value="3" checked /> Both</label>
+              <label class="opt"><input type="radio" name="sex4" value="1" /> Male</label>
+              <label class="opt"><input type="radio" name="sex4" value="2" /> Female</label>
+            </fieldset>
+            <fieldset data-role="window4">
+              <legend>Trend the ranking uses</legend>
+              <label class="opt"><input type="radio" name="window4" value="t10" checked /> Past 10 years</label>
+              <label class="opt"><input type="radio" name="window4" value="t5" /> Past 5 years</label>
+              <label class="opt"><input type="radio" name="window4" value="t5_10" /> 5–10 years ago</label>
+              <label class="opt"><input type="radio" name="window4" value="t10_15" /> 10–15 years ago</label>
+              <p class="note">One sex and one window at a time: the table is one row per
+                country, and several of either would multiply the rows rather than the
+                information.</p>
+            </fieldset>
+            <fieldset data-role="extras"></fieldset>
+          </div>
+        </details>
+        <div id="fig4"></div>
+        <details class="fig-notes">
+          <summary>Notes</summary>
+          <p class="note" id="fig4-note"></p>
+        </details>
+      </div>
+    </details>
+  </main>
+
+<script type="module">
+import { locations, summary } from "../assets/js/data.js";
+import { prospectChart, prospectGrid, prospectLegend } from "../assets/js/prospect-chart.js";
+import { changeDistribution, distributionTable } from "../assets/js/change-distribution.js";
+import { rankingTable } from "../assets/js/ranking-table.js";
+import { locationPicker } from "../assets/js/location-picker.js";
+import { figureDownload } from "../assets/js/figure-download.js";
+import { optionsPanel } from "../assets/js/figure-options.js";
+import { num, fullName } from "../assets/js/format.js";
+
+const [L, S] = await Promise.all([locations(), summary()]);
+const $ = (s) => document.querySelector(s);
+const codes = Object.keys(L.locations);
+
+// The years height's gain is due over, latest value to target year. The target's pace per
+// decade divides by it, so it is derived from those two years rather than typed in.
+const HEIGHT_WINDOW_YEARS = S.meta.targetYear - S.outcomes.height.latestYear;
+
+const qs = new URLSearchParams(location.search);
+// An ABSENT parameter means "use the default"; a present but empty one means the reader
+// cleared the selection. Collapsing the two makes an empty selection impossible to link
+// to — and, worse, makes "no locations selected" render as Nigeria.
+const list = (k, fallback) => {
+  const raw = qs.get(k);
+  return raw === null ? fallback : raw.split(",").filter(Boolean);
+};
+
+const state = {
+  locs: list("loc", ["NGA"]).filter((c) => L.locations[c]),
+  outcome: S.outcomes[qs.get("indicator")] ? qs.get("indicator") : "nnm",
+  comparators: list("vs", null),
+  fig1: { sexes: ["3"], trends: ["t10"], scale: "linear", layout: "separate", extras: [] },
+  fig2: { sexes: ["3"], trends: ["t10"], scale: "linear", rowScale: "shared",
+    panelBy: null, layout: "separate", extras: [] },
+  // Not a per-location figure, so it carries no `sexes`/`trends` LISTS: it draws one
+  // distribution and one threshold, and picking several of either would stack curves that
+  // have no room to be told apart.
+  fig3: { display: "density", sex: "3", window: "t10", extras: [] },
+  fig5: { display: "density", sex: "3", extras: [] },
+  // Countries picked out inside the two distributions. Shared by both, and not the picker.
+  highlight: list("hl", []).filter((c) => L.locations[c]?.type === "country"),
+  // `sortBy`/`sortDir` live in state so a re-render from any other control keeps the
+  // reader's sort. A null direction means "the sensible one for this column" — best-first
+  // for a measure, A-Z for a name.
+  fig4: { sex: "3", window: "t10", extras: [], sortBy: "rate", sortDir: null },
+  outcome4: "nnm",
+};
+
+// The five, and the ones offered beside them. Read from the data rather than listed
+// here, so adding an outcome to the pipeline is the whole of adding it to the page —
+// and so a supplementary one can never arrive as a sixth row nobody asked for.
+const CORE_OUTCOMES = Object.keys(S.outcomes).filter((k) => !S.outcomes[k].supplementary);
+const EXTRA_OUTCOMES = Object.keys(S.outcomes).filter((k) => S.outcomes[k].supplementary);
+
+// Preserves pipeline order rather than tick order, so a row does not move when a reader
+// unticks one extra and re-ticks another.
+const outcomesFor = (o) =>
+  Object.keys(S.outcomes).filter((k) => !S.outcomes[k].supplementary || o.extras.includes(k));
+
+// "Five indicators" stops being true the moment a supplementary one is ticked, and the
+// phrase is baked into downloaded figure titles, so it counts rather than asserts.
+const COUNT_WORDS = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"];
+const indicatorsPhrase = (o) => {
+  const n = outcomesFor(o).length;
+  return `${COUNT_WORDS[n] ?? n} indicators`;
+};
+
+for (const fs of document.querySelectorAll("fieldset[data-role='extras']")) {
+  fs.insertAdjacentHTML("afterbegin", EXTRA_OUTCOMES.map((k) =>
+    `<label class="opt"><input type="checkbox" value="${k}" /> ${S.outcomes[k].label}</label>`
+  ).join(""));
+}
+
+// An indicator picker lists the five always and an extra only once that figure's
+// Customize has ticked it, so the two controls cannot disagree about what it contains.
+// Both figures with a picker share this; `pick` names the state field holding the choice.
+function paintOutcomePicker(sel, figKey, pick) {
+  const keys = outcomesFor(state[figKey]);
+  if (!keys.includes(state[pick])) state[pick] = CORE_OUTCOMES[0];
+  $(sel).innerHTML = keys
+    .map((k) => `<option value="${k}">${fullName(S.outcomes[k])}</option>`).join("");
+  $(sel).value = state[pick];
+}
+if (!outcomesFor(state.fig2).includes(state.outcome)) {
+  // An indicator arriving in the URL that is supplementary has to switch its box on,
+  // or the link would silently land on a different indicator than it names.
+  if (EXTRA_OUTCOMES.includes(state.outcome)) state.fig2.extras = [state.outcome];
+}
+for (const k of state.fig2.extras) {
+  const box = document.querySelector(`#sec2 fieldset[data-role='extras'] input[value="${k}"]`);
+  if (box) box.checked = true;
+}
+paintOutcomePicker("#outcome2", "fig2", "outcome");
+paintOutcomePicker("#outcome4", "fig4", "outcome4");
+
+// Comparators default to the most populous countries sharing a region with the
+// selection — a stand-in until "Countries Like Mine" can supply real peers.
+function defaultComparators() {
+  const regions = new Set(state.locs.map((c) => L.locations[c].region).filter(Boolean));
+  return codes
+    .filter((c) => L.locations[c].type === "country" && regions.has(L.locations[c].region)
+      && !state.locs.includes(c))
+    .sort((a, b) => (L.locations[b].pop ?? 0) - (L.locations[a].pop ?? 0))
+    .slice(0, 5);
+}
+
+const byLabel = codes.map((c) => [L.locations[c].label, c])
+  .sort((a, b) => a[0].localeCompare(b[0]));
+const labelToCode = new Map(byLabel.map(([lab, c]) => [lab.toLowerCase(), c]));
+$("#complist").innerHTML = byLabel.map(([lab]) => `<option value="${lab}"></option>`).join("");
+// The distributions are countries only, so their box offers nothing else.
+$("#countrylist").innerHTML = byLabel.filter(([, c]) => L.locations[c].type === "country")
+  .map(([lab]) => `<option value="${lab}"></option>`).join("");
+
+// Both highlight boxes show the one list, so the chips are painted into both at once.
+function paintHighlightChips() {
+  for (const host of document.querySelectorAll(".hl-chips")) {
+    host.innerHTML = "";
+    if (!state.highlight.length) { host.innerHTML = `<span class="chips-empty">None</span>`; continue; }
+    for (const c of state.highlight) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.innerHTML = `${L.locations[c].label}<span aria-hidden="true">×</span>`;
+      b.addEventListener("click", () => {
+        state.highlight = state.highlight.filter((x) => x !== c);
+        paintHighlightChips(); renderFig3(); renderFig5(); syncUrl();
+      });
+      host.appendChild(b);
+    }
+  }
+}
+for (const input of document.querySelectorAll(".hl-input")) {
+  input.addEventListener("change", (e) => {
+    const c = labelToCode.get(e.target.value.trim().toLowerCase());
+    e.target.value = "";
+    if (!c || L.locations[c].type !== "country" || state.highlight.includes(c)) return;
+    state.highlight = [...state.highlight, c];
+    paintHighlightChips(); renderFig3(); renderFig5(); syncUrl();
+  });
+}
+
+function comparators() {
+  return state.comparators ?? defaultComparators();
+}
+
+function paintCompChips() {
+  const host = $("#compchips");
+  host.innerHTML = "";
+  const cs = comparators();
+  if (!cs.length) { host.innerHTML = `<span class="chips-empty">None</span>`; return; }
+  for (const c of cs) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.innerHTML = `${L.locations[c].label}<span aria-hidden="true">×</span>`;
+    b.addEventListener("click", () => {
+      state.comparators = comparators().filter((x) => x !== c);
+      paintCompChips(); renderFig2(); syncUrl();
+    });
+    host.appendChild(b);
+  }
+}
+
+$("#comparators").addEventListener("change", (e) => {
+  const c = labelToCode.get(e.target.value.trim().toLowerCase());
+  e.target.value = "";
+  if (!c) return;
+  const cs = comparators();
+  if (!cs.includes(c) && !state.locs.includes(c)) state.comparators = [...cs, c];
+  paintCompChips(); renderFig2(); syncUrl();
+});
+
+// Which slice of state each radio fieldset writes to. The two checkbox fieldsets
+// (sexes, trends) are handled separately below, because they hold a list and need a
+// fallback for the reader who unticks everything.
+const RADIO_ROLE = {
+  scale: "scale", rowScale: "rowScale", panels: "panelBy", layout: "layout",
+  display: "display", sex3: "sex", window3: "window", sex4: "sex", window4: "window",
+  sex5: "sex",
+};
+
+// Wire one figure's Customize panel to its slice of state.
+function wirePanel(sectionSel, key, onDone) {
+  const root = $(sectionSel);
+  for (const fs of root.querySelectorAll(".customize fieldset")) {
+    const role = fs.dataset.role;
+    fs.addEventListener("change", () => {
+      if (role === "sexes" || role === "trends" || role === "extras") {
+        const v = [...fs.querySelectorAll("input:checked")].map((b) => b.value);
+        // Ticking nothing is a real answer for `extras` — none of them — where for sex
+        // and trend it would leave the figure with no rows at all, so those two fall
+        // back and this one does not.
+        if (role === "extras") {
+          state[key].extras = v;
+          if (key === "fig2") paintOutcomePicker("#outcome2", "fig2", "outcome");
+          if (key === "fig4") paintOutcomePicker("#outcome4", "fig4", "outcome4");
+        } else {
+          const fallback = role === "sexes" ? "3" : S.meta.defaultTrend;
+          if (!v.length) { fs.querySelector(`input[value="${fallback}"]`).checked = true; }
+          state[key][role] = v.length ? v : [fallback];
+        }
+      } else {
+        const v = fs.querySelector("input:checked").value;
+        // "none" is the off position of a grouping control, not a group.
+        state[key][RADIO_ROLE[role]] = v === "none" ? null : v;
+      }
+      onDone();
+      syncUrl();
+    });
+  }
+}
+
+// A worsening trend compounded to 2050 can leave the range its measure lives in, so it is held
+// at the boundary. That is worth a sentence — a row printing the bound is off track by MORE than
+// the number it shows — but only when it has actually happened to something on screen.
+//
+// It used to be printed whenever an outcome COULD be bounded, which is always, so it said nothing
+// about the figure in front of the reader. This asks the data instead: does any projection among
+// the locations, sexes and trend windows currently drawn sit at its measure's ceiling?
+const CEILING_HELD_NOTE = "In a few cases, worsening trends suggest outcomes above possible values"
+  + " (shares above 100% or more than 1000 deaths per 1000). In these cases, the figure shows the"
+  + " highest possible value instead.";
+
+// Where the projected value sits inside each packed trend array. Looked up by NAME rather
+// than typed as 3, so a change to the packing cannot silently shift what is compared
+// against the ceiling — the arrays carry no field names of their own.
+const I_PROJ = S.meta.trendFields.indexOf("proj2050");
+
+// `o` is whichever figure's state object is asking. sec1 and sec2 carry `sexes` and
+// `trends` as arrays because they can draw several at once; sec3 and sec4 draw one of each
+// and carry `sex` and `window` as scalars. Reading only the plural form threw a TypeError
+// for the ranking note on every indicator with a `valueMax` — which is all of them except
+// height, the one whose null valueMax returned early before reaching the line. The note was
+// silently blank on the other seven. Same `?? [singular]` idiom the window prose uses.
+function heldAtCeiling(codes, outcomes, o) {
+  const sexes = o.sexes ?? [o.sex];
+  const trends = o.trends ?? [o.window];
+  return codes.some((c) => outcomes.some((k) => {
+    const meta = S.outcomes[k];
+    if (meta.valueMax == null) return false;
+    return sexes.some((sx) => trends.some((w) => {
+      const t = S.data[c]?.[k]?.[sx]?.t?.[w];
+      // Same test the chart uses for an arrow's "held at the most this measure can be"
+      // tooltip, so the note and the tooltips cannot disagree about which rows are bounded.
+      return t && t[I_PROJ] != null && t[I_PROJ] >= meta.valueMax;
+    }));
+  }));
+}
+
+// The weaker half of the article's own reliability ladder. A value at these layers is
+// imputed from regional and income patterns rather than measured, and it is exactly the
+// large countries that land there — so a figure showing one has to say so.
+const WEAK_LAYER = /^[45]/;
+
+// What each supplementary outcome has to admit about itself, said only when it is on
+// screen. They are opt-in and each carries a different problem, so one blanket sentence
+// about "supplementary outcomes" would be true of neither.
+function supplementaryNotes(o, codes) {
+  const out = [];
+  const on = outcomesFor(o);
+
+  if (on.includes("skills")) {
+    const m = S.outcomes.skills;
+    out.push(`${m.label} is the share of all children, including those out of school, not`
+      + ` reaching basic math skills — a wider net than the whole-population PISA row, which`
+      + ` reaches only the economies that sit PISA. It is one estimate per country, built from`
+      + ` each country's most recent assessment, and those assessments date from`
+      + ` ${m.period ?? m.latestYear}, which is why that span follows its name.`
+      + (o.levels ? ` It has no trend.`
+        : ` So it has no trend and no goal: it is drawn as a dot, with nothing carried`
+          + ` forward to ${S.meta.targetYear}.`));
+    // Named rather than counted: "3 countries are imputed" is not actionable, and the
+    // whole point is that the reader is probably looking at one of them.
+    const weak = codes.filter((c) => WEAK_LAYER.test(S.data[c]?.skills?.["3"]?.lyr ?? ""));
+    if (weak.length) {
+      out.push(`For ${listNames(weak)} that value is imputed from regional and income`
+        + ` patterns rather than measured, because no international assessment covers it.`);
+    }
+  }
+
+  if (on.includes("q0_20")) {
+    out.push(`${S.outcomes.q0_20.label} chains the under-five and 5–19 probabilities rather`
+      + ` than adding them, since the two are per live birth and per survivor to age five.`
+      + ` It overlaps the three mortality rows above rather than adding to them.`);
+  }
+
+  if (on.includes("math_students")) {
+    out.push(`${S.outcomes.math_students.label} is the same proficiency floor as the`
+      + ` whole-population PISA row but counted over the students PISA tested, not over all`
+      + ` 15-year-olds — so it leaves out children who are not in school or were`
+      + ` excluded from the sample, and it flatters countries that enroll fewer of them.`
+      + ` It is here because it is the only math measure published by sex: the coverage`
+      + ` index the whole-population row is built on is not broken down by sex, and`
+      + ` assuming boys and girls are enrolled alike would shrink the gap by the`
+      + ` coverage rate in exactly the countries where it is widest.`);
+  }
+  return out;
+}
+
+// "Nigeria", "Nigeria and India", "Nigeria, India and China" — a list a sentence can hold.
+function listNames(cs) {
+  const n = cs.map((c) => L.locations[c]?.label ?? c);
+  if (n.length <= 1) return n.join("");
+  return `${n.slice(0, -1).join(", ")} and ${n[n.length - 1]}`;
+}
+
+// A sentence naming the cut, for the figure that is using it.
+function tercileNote() {
+  const m = L.meta?.mortTercile;
+  if (!m) return "Panels group locations by tercile of under-20 mortality.";
+  return `Panels are terciles of ${m.measure.toLowerCase()} in ${m.year}: `
+    + `low below ${num(m.cuts[0])}, medium below ${num(m.cuts[1])}, high above. `
+    + m.note;
+}
+
+// What a figure says when there is nothing to draw. Silence reads as a broken page.
+// Notes live in a disclosure now, so clearing the text has to close and hide the whole
+// control rather than leaving an empty "Notes" affordance under the figure.
+function setNote(sel, text) {
+  const p = $(sel);
+  p.textContent = text ?? "";
+  const box = p.closest(".fig-notes");
+  if (box) { box.hidden = !text; if (!text) box.open = false; }
+}
+
+function emptyFigure(host, message) {
+  const p = document.createElement("p");
+  p.className = "note fig-empty";
+  p.textContent = message;
+  host.appendChild(p);
+}
+
+function renderFig1() {
+  paintSec1Title();
+  if (!$("#sec1").open) return;
+  const host = $("#fig1");
+  host.textContent = "";
+  if (!state.locs.length) {
+    emptyFigure(host, "No locations selected. Choose one above to see this figure.");
+    setNote("#fig1-note", "");
+    return;
+  }
+  // Everything on one figure. One chart, so one legend, one download and one table — and
+  // the panels cannot disagree about scale, because a single pass draws them. What a panel
+  // IS is the reader's choice: a location carrying the five indicators, or an indicator
+  // carrying the selected locations.
+  if (state.fig1.layout !== "separate") {
+    const byOutcome = state.fig1.layout === "indicators";
+    const block = document.createElement("div");
+    block.className = "fig-block";
+    const target = document.createElement("div");
+    target.className = "chart-host chart-host-wide";
+    block.appendChild(target);
+    host.appendChild(block);
+    // Named once and used twice — the chart's accessible label and, where the reader
+    // ticks for it, the title baked into the downloaded file.
+    const figTitle = byOutcome
+      ? `${indicatorsPhrase(state.fig1)}, a panel each: prospects by ${S.meta.targetYear}`
+      : `${indicatorsPhrase(state.fig1)}: prospects by ${S.meta.targetYear}`;
+    const cfg = {
+      summary: S, locations: L, locationList: state.locs, ...state.fig1,
+      outcomeList: outcomesFor(state.fig1),
+      gridBy: byOutcome ? "outcome" : "location", title: figTitle,
+    };
+    prospectGrid(target, cfg);
+    // Into the chart host's own options panel, beside the table the chart just put there.
+    // Safe inside a host prospectGrid clears, because this runs after every render rather
+    // than once at startup — which is what the old placement on `block` was avoiding.
+    figureDownload(
+      optionsPanel(target),
+      () => target.querySelector("svg.prospect-svg"),
+      () => `five-indicators-${byOutcome ? "by-indicator-" : ""}${state.locs.length}-locations`,
+      // The notes are READ OFF THE PAGE rather than rebuilt, so a downloaded figure
+      // cannot end up saying something the paragraph beside it does not.
+      () => ({ title: figTitle, notes: $("#fig1-note").textContent }),
+      // The same config, drawn again off-screen for the page or slide the reader picks. The
+      // panel count bounds how many columns are worth trying there.
+      { draw: (h, o) => prospectGrid(h, { ...cfg, ...o }),
+        maxCols: byOutcome ? cfg.outcomeList.length : state.locs.length },
+    );
+    setNote("#fig1-note", fiveIndicatorNote(state.fig1, state.locs));
+    return;
+  }
+
+  // One block per location. Every block would otherwise carry an identical legend, which
+  // is both noise and the only thing standing between one country's chart and the next —
+  // so it is drawn once here and the blocks are told apart by a rule and a name instead.
+  const many = state.locs.length > 1;
+  if (many) {
+    const lg = prospectLegend({ summary: S, mode: "outcomes", ...state.fig1,
+      outcomeList: outcomesFor(state.fig1) });
+    lg.classList.add("shared");
+    host.appendChild(lg);
+  }
+  for (const code of state.locs) {
+    const block = document.createElement("div");
+    block.className = "fig-block";
+    // Named even when it is the only one. It used to be titled only when several were on
+    // screen, which meant a single figure was anonymous and, worse, that whether a figure
+    // carried its own name depended on what else happened to be selected.
+    const h = document.createElement("h3");
+    h.className = "fig-block-title";
+    h.textContent = L.locations[code].label;
+    block.appendChild(h);
+
+    const target = document.createElement("div");
+    target.className = "chart-host";
+    block.appendChild(target);
+    host.appendChild(block);
+    const figTitle = `${indicatorsPhrase(state.fig1)} for ${L.locations[code].label}:`
+      + ` prospects by ${S.meta.targetYear}`;
+    const cfg = {
+      mode: "outcomes", summary: S, locations: L, location: code,
+      ...state.fig1, outcomeList: outcomesFor(state.fig1),
+      legend: !many, title: figTitle,
+    };
+    prospectChart(target, cfg);
+    figureDownload(
+      optionsPanel(target),
+      () => target.querySelector("svg.prospect-svg"),
+      () => `five-indicators-${L.locations[code].label}`,
+      // Every block on screen shares one note paragraph, so every download carries it.
+      () => ({ title: figTitle, notes: $("#fig1-note").textContent }),
+      { draw: (h) => prospectChart(h, cfg) },
+    );
+  }
+  setNote("#fig1-note", fiveIndicatorNote(state.fig1, state.locs));
+}
+
+// The section is named for what it draws, and a ticked extra makes "Five indicators" a
+// visible falsehood beside seven rows.
+function paintSec1Title() {
+  $("#sec1 .sec-title").textContent = `${indicatorsPhrase(state.fig1)}, one country`;
+}
+
+// How the trend window reads in prose. "ten years earlier" is only true of the default,
+// and the control offers three more — a note claiming ten years beside a five-year trend
+// is wrong in a way the reader cannot see from the figure.
+const WINDOW_PROSE = {
+  t10: "the past ten years", t5: "the past five years",
+  t5_10: "five to ten years ago", t10_15: "ten to fifteen years ago",
+};
+
+// The note used to round totals to whole centimetres, on the argument that "4.0 cm for
+// boys" is false precision in a paragraph. That held while the targets were 4.047 and
+// 3.039, where a whole number was accurate to 1%. On the 25-year window they are 3.725
+// and 2.926, and rounding those to "4" and "3" overstates the boys' target by 7% — so
+// totals now use `num`, the site-wide rule, like everything else. The per-decade rates
+// keep a decimal and drop a trailing zero, which is what lets 0.98 read as "1" beside 1.3
+// without claiming either is exact.
+const cmRate = (v) => String(Math.round(v * 10) / 10);
+
+const SEX_WORD = { 1: "boys", 2: "girls", 3: "both sexes" };
+
+// The note for whichever figure is drawing all five indicators — since both of them can
+// now be that figure, it takes the settings slice rather than reading one, plus the codes
+// actually on screen so the bounded-projection caveat can check them.
+//
+// The prose is fixed; its NUMBERS are not. Every year, every centimetre and the length of
+// the height window are read from the data, so a rebuilt goalpost or a new vintage cannot
+// leave the paragraph behind.
+// "Nigeria, India and China" — a list a sentence can hold.
+function listOf(xs) {
+  if (xs.length <= 1) return xs.join("");
+  return `${xs.slice(0, -1).join(", ")} and ${xs[xs.length - 1]}`;
+}
+
+// The sentences that belong to the INDICATORS on screen rather than to a layout, so both
+// figures draw from one place. The comparison figure used to get a two-line note while the
+// figure above it got twelve; it now gets the same explanation, restricted to whichever
+// indicator it is actually drawing.
+function indicatorNotes(keys, o, codes) {
+  const out = [];
+  const meta = (k) => S.outcomes[k];
+  const has = (k) => keys.includes(k);
+
+  // A single observation has no goal (2026-09-25), so it is not listed as aiming anywhere.
+  const zero = keys.filter((k) => meta(k).goalpostBasis === "zero" && !meta(k).singleObservation);
+  if (zero.length) {
+    out.push(`${listOf(zero.map((k) => meta(k).label))} aim${zero.length > 1 ? "" : "s"} at`
+      + ` halving the value, with the end point at 0.`);
+  }
+
+  // A goalpost set by one economy's best year. Named, with its year, because "halve the gap
+  // to 5%" is a claim about where 5% came from.
+  for (const k of keys.filter((k) => meta(k).goalpostBasis === "best value on record")) {
+    const m = meta(k);
+    const sexes = (o.sexes ?? [o.sex]).filter((s) => m.goalpost?.[s] != null);
+    const recs = sexes.map((s) => {
+      const h = m.goalpostHolder?.[s];
+      const who = h ? ` (${h.label}, ${h.year})` : "";
+      return `${num(m.goalpost[s])}%${sexes.length > 1 ? ` for ${SEX_WORD[s]}` : ""}${who}`;
+    });
+    if (recs.length) {
+      out.push(`${m.label} aims at halving the gap to the best value any economy has recorded`
+        + ` since ${m.recordSince}: ${listOf(recs)}. That is its end point, rather than 0.`);
+    }
+  }
+
+  if (has("height")) {
+    const h = meta("height");
+    const W = HEIGHT_WINDOW_YEARS, decades = W / 10;
+    const b = h.goalpostHolder["3"];
+    out.push(`Height aims at half the largest ${W}-year gain on record, ${b.label}'s in`
+      + ` ${b.from}–${b.to}:`
+      + ` ${num(h.target["1"])} cm for boys and ${num(h.target["2"])} cm for girls, about`
+      + ` ${cmRate(h.target["1"] / decades)} and ${cmRate(h.target["2"] / decades)} cm per`
+      + ` decade. Its end point is therefore each country's own ${h.latestYear} height plus`
+      + ` that full gain (${num(h.goalpostGain["1"])} cm for boys,`
+      + ` ${num(h.goalpostGain["2"])} cm for girls), so the goalpost differs by country. An`
+      + ` arrow that runs past the end of its line is on course to beat that record.`);
+  }
+
+  const units = [];
+  if (keys.some((k) => meta(k).trendRule !== "linear")) units.push("per cent a year");
+  if (keys.some((k) => meta(k).trendRule === "linear")) units.push("cm a year for height");
+  const windows = (o.trends ?? [o.window]).map((w) => WINDOW_PROSE[w] ?? w);
+  out.push(`Recent trends are the average annual rate of improvement over`
+    + ` ${listOf(windows)} (${listOf(units)}).`);
+
+  // Only the ones actually carried, and only when they are on screen — the sentence
+  // disappears by itself when a source catches up.
+  const carried = keys.filter((k) => meta(k).carriedForwardFrom);
+  if (carried.length) {
+    const bits = [];
+    if (carried.some((k) => meta(k).family === "mortality")) {
+      bits.push(`mortality one year past UN IGME's`
+        + ` ${meta(carried.find((k) => meta(k).family === "mortality")).carriedForwardFrom}`
+        + ` round on its own ten-year trend`);
+    }
+    if (carried.includes("height")) {
+      const y = meta("height").carriedForwardFrom;
+      bits.push(`height from NCD-RisC's ${y} round by the cohort measured at age 13 in ${y},`
+        + ` which reaches 19 in ${S.meta.baseYear}`);
+    }
+    out.push(`The ${S.meta.baseYear} value is carried forward rather than measured:`
+      + ` ${listOf(bits)}.`);
+  }
+
+  if (has("math")) {
+    // The note this replaces said more recent maths data existed but was held back for
+    // pandemic effects. PISA 2025 landed on 8 September 2026 and the cap came off with
+    // it, so maths now ends in the same year as everything else. What a reader needs
+    // instead are the two things that make this row unlike the other four.
+    const cyc = meta("math").observedYears;
+    out.push(`Math is assessed every three years, so values between PISA cycles are`
+      + ` interpolated to put this row on the same annual footing as the others.`
+      + (cyc ? ` The cycles themselves are ${listOf(cyc.map(String))}.` : ""));
+    // OECD files PISA 2009+ (tested 2010) and PISA for Development (tested 2017) under
+    // 2009 and 2018. The series sits in the year tested, which moves a trend's start,
+    // so a reader checking a country against OECD's tables is told why it differs.
+    const off = (meta("math").offCycle ?? []).filter((r) => codes?.includes(r.code));
+    const pairs = [...new Set(off.map((r) => `${r.cycle}-${r.year}`))];
+    if (pairs.length) {
+      out.push(pairs.map((p) => {
+        const rs = off.filter((r) => `${r.cycle}-${r.year}` === p);
+        return `${listOf(rs.map((r) => L.locations[r.code]?.label ?? r.code))} sat PISA`
+          + ` ${rs[0].cycle} in ${rs[0].year}`;
+      }).join("; ") + ". The values here are placed in the year tested.");
+    }
+    out.push(`It counts every 15-year-old who is not in secondary school or was excluded`
+      + ` from the sample as below the minimum, so a country enrolling more of its`
+      + ` children can move the wrong way on this measure while its tested students`
+      + ` improve.`);
+    if (o.sexes && !o.sexes.every((s) => s === "3")) {
+      out.push("Low math proficiency is published for both sexes only — the coverage"
+        + " index it is built on is not broken down by sex — so it has no male or"
+        + " female row.");
+    }
+  }
+  if (has("height")) {
+    out.push("Height has no published both-sexes value; it is the mean over 19-year-olds,"
+      + " weighted by population (UN WPP 2024) at that age.");
+  }
+
+  out.push(...supplementaryNotes({ ...o, extras: keys.filter((k) => meta(k).supplementary) },
+                                 codes));
+  if (heldAtCeiling(codes, keys, o)) out.push(CEILING_HELD_NOTE);
+
+  const src = [];
+  if (keys.some((k) => meta(k).family === "mortality")) src.push("UN IGME 2025 (mortality)");
+  if (has("height")) src.push("NCD-RisC 2020 (height)");
+  if (has("math") || has("math_students")) src.push("OECD PISA 2025 (math proficiency)");
+  if (has("skills")) src.push("Gust, Hanushek & Woessmann 2024 (basic math skills)");
+  if (src.length) out.push(`Data sources: ${listOf(src)}.`);
+  return out;
+}
+
+function fiveIndicatorNote(o, codes) {
+  const notes = indicatorNotes(outcomesFor(o), o, codes);
+  // What follows describes a state the sentences above do not cover, so each appears only
+  // when the reader is actually in it.
+  if (o.layout === "indicators") {
+    notes.push("Each panel is one indicator and its rows are the locations on screen.");
+    notes.push(o.rowScale === "shared"
+      ? "Each panel runs from the highest value in it to the goal and carries its own axis"
+        + " in its own units, since one axis cannot describe five rulers."
+      : "Every row runs from its own latest value to its own goal, so all panels read off"
+        + " the same share-of-the-gap axis even though their units differ.");
+  }
+  return notes.filter(Boolean).join(" ");
+}
+
+function renderFig4() {
+  if (!$("#sec4").open) return;
+  const o = state.fig4;
+  const res = rankingTable($("#fig4"), {
+    summary: S, locations: L, outcome: state.outcome4, sex: o.sex, window: o.window,
+    sortBy: o.sortBy, sortDir: o.sortDir,
+    // Clicking the sorted column flips it; clicking another takes that column's own
+    // sensible direction rather than inheriting the last one.
+    onSort: (col) => {
+      const cur = o.sortDir ?? (o.sortBy === "label" ? 1 : -1);
+      if (o.sortBy === col) { o.sortDir = -cur; } else { o.sortBy = col; o.sortDir = null; }
+      renderFig4(); syncUrl();
+    },
+  });
+  setNote("#fig4-note", rankingNote(res, o));
+}
+
+// The table's own caveats. The years column is the one that needs explaining: it is a
+// duration read off a rate, so it says what the rate says and no more.
+function rankingNote(res, o) {
+  const m = res.meta;
+  const band = Math.round(S.meta.bands[1] * 100);
+  const n = res.rows.length;
+  const wrong = res.rows.filter((r) => r.wrongWay).length;
+  const reach = res.rows.filter((r) => r.years != null
+    && r.years <= S.meta.targetYear - m.latestYear).length;
+  const notes = [
+    // "a ${WINDOW_PROSE[...]} trend" read as "a the past ten years trend": these phrases
+    // are written to follow "over", which is how the other three callers use them.
+    `All ${n} countries with a trend over ${WINDOW_PROSE[o.window] ?? o.window} for`
+    + ` ${fullName(m).toLowerCase()}, drawn for`
+    + ` ${o.sex === "3" ? "both sexes" : o.sex === "1" ? "males" : "females"}. Countries`
+    + ` only — a regional aggregate is a weighted mean of countries already in the table.`,
+    // Says what the target IS rather than calling it "half the gap". On four of the five
+    // the goalpost is zero, so the distance to it and the value are the same number and
+    // "half the gap" is a roundabout way of saying "half of it".
+    `"Years to the goal" is how long this country would need at its current pace to reach`
+    + ` the ${S.meta.targetYear} target — ${m.trendRule === "linear"
+        ? `a rise of ${m.target?.[o.sex] != null ? `${num(m.target[o.sex])} cm` : "half the"
+            + " largest gain on record"}`
+        : m.goalpost?.[o.sex] ? `halving its ${m.latestYear} gap to the best value on record,`
+            + ` ${num(m.goalpost[o.sex])}%`
+        : `halving its ${m.latestYear} value`} — read as a duration.`
+    + ` ${reach} of ${n} reach it within the ${S.meta.targetYear - m.latestYear}`
+    + ` years to ${S.meta.targetYear}.`,
+    wrong
+      ? `${wrong} ${wrong === 1 ? "country is" : "countries are"} moving away from the goal,`
+        + ` so no number of years would get there on this trend; those rows say "moving`
+        + ` away" instead.`
+      : null,
+    // Reaching the goalpost itself is a different and unanswerable question, and a reader
+    // is entitled to wonder why the column is not that.
+    m.trendRule === "linear"
+      ? `Height moves in a straight line, so its years are the target divided by the annual`
+        + ` gain.`
+      : `Each year removes the same fraction of what is left, so the value approaches its`
+        + ` goalpost without ever reaching it — which is why the column counts years to the`
+        + ` ${band}% target rather than to the goalpost itself.`,
+    // A ranking puts the most extreme rate at the top by construction, and the most
+    // extreme rate is where a break in the source shows up first. Said here rather than
+    // left for a reader to discover by trusting the top row.
+    `A ranking puts the most extreme rate first. Some of those are real — a country can`
+    + ` genuinely be falling 20% a year — and some are a crisis: UN IGME smooths its`
+    + ` estimates but adds crisis mortality back in so it stays visible, so a war, a flood`
+    + ` or an earthquake shows up as one sharp year that a ten-year trend then reads as a`
+    + ` trend. The values are right; the trend across them is the poor summary. Read the top`
+    + ` of the list against the value columns beside it.`,
+    `Click a column heading to re-rank.`,
+  ];
+  notes.push(...indicatorNotes([state.outcome4], o, res.rows.map((r) => r.code)));
+  return notes.filter(Boolean).join(" ");
+}
+
+function renderFig3() {
+  if (!$("#sec3").open) return;
+  const host = $("#fig3");
+  // Clears the options disclosure along with the chart, since both now live in here.
+  host.textContent = "";
+
+  const keys = outcomesFor(state.fig3);
+  const title = `Average annual rate of improvement across countries, against the pace`
+    + ` needed by ${S.meta.targetYear}`;
+  const cfg = { summary: S, locations: L, outcomeList: keys, ...state.fig3, title,
+    highlight: state.highlight };
+  const res = changeDistribution(host, cfg);
+
+  if (!res.drawn.length) {
+    emptyFigure(host, "No indicator has enough countries with a trend on this window.");
+    setNote("#fig3-note", "");
+    return;
+  }
+  const opts3 = optionsPanel(host);
+  opts3.appendChild(distributionTable(res.drawn, cfg));
+  figureDownload(
+    opts3,
+    () => host.querySelector("svg.dist-svg"),
+    () => `annual-change-${state.fig3.display}`,
+    () => ({ title, notes: $("#fig3-note").textContent }),
+    { draw: (h, o) => changeDistribution(h, { ...cfg, ...o }), maxCols: res.drawn.length },
+  );
+  setNote("#fig3-note", distributionNote(res));
+}
+
+function renderFig5() {
+  if (!$("#sec5").open) return;
+  const host = $("#fig5");
+  host.textContent = "";
+
+  const keys = outcomesFor(state.fig5);
+  const title = "Where countries are now: the latest value across countries";
+  const cfg = { summary: S, locations: L, outcomeList: keys, ...state.fig5, title,
+    measure: "level", highlight: state.highlight };
+  const res = changeDistribution(host, cfg);
+
+  if (!res.drawn.length) {
+    emptyFigure(host, "No indicator has enough countries with a value for this sex.");
+    setNote("#fig5-note", "");
+    return;
+  }
+  const opts = optionsPanel(host);
+  opts.appendChild(distributionTable(res.drawn, cfg));
+  figureDownload(
+    opts,
+    () => host.querySelector("svg.dist-svg"),
+    () => `latest-value-${state.fig5.display}`,
+    () => ({ title, notes: $("#fig5-note").textContent }),
+    { draw: (h, o) => changeDistribution(h, { ...cfg, ...o }), maxCols: res.drawn.length },
+  );
+  setNote("#fig5-note", levelNote(res));
+}
+
+// A sentence naming the highlighted countries, for both distributions — and which of them a
+// panel is missing, since a tick that is not there reads as the page ignoring the choice.
+function highlightNote(res) {
+  if (!state.highlight.length) return null;
+  const missing = res.drawn.flatMap((d) => {
+    const lost = state.highlight.filter((c) => !d.points.some((p) => p.code === c));
+    return lost.length ? [`${listNames(lost)} on ${d.meta.label}`] : [];
+  });
+  return `Highlighted: ${listNames(state.highlight)}.`
+    + (missing.length ? ` No value for ${missing.join("; ")}.` : "");
+}
+
+// What the levels figure has to say about itself. Shorter than the rates note: there is no
+// target line and no trend window, so what is left is what the panels are, which years,
+// and what a panel that is missing was dropped for.
+function levelNote(res) {
+  const o = state.fig5;
+  const sexWord = o.sex === "3" ? "both sexes combined" : o.sex === "1" ? "males" : "females";
+  const years = new Map();
+  for (const d of res.drawn) {
+    const y = d.meta.period ?? d.meta.latestYear;
+    if (!years.has(y)) years.set(y, []);
+    years.get(y).push(d.meta.label);
+  }
+  const common = [...years].sort((a, b) => b[1].length - a[1].length)[0][0];
+  const odd = [...years].filter(([y]) => y !== common);
+  const notes = [
+    `Each panel is the distribution across countries of the latest value, ${common}`
+    + (odd.length ? ` (${odd.map(([y, ls]) => `${y} for ${listOf(ls)}`).join("; ")})` : "")
+    + `, for ${sexWord}. Countries only — a regional aggregate is a weighted mean of countries`
+    + ` already in the panel.`,
+    `Each axis is in the indicator's own units and runs low to high, so on the indicators that`
+    + ` aim to fall the best-placed countries are on the left.`,
+    highlightNote(res),
+  ];
+  const carried = res.drawn.filter((d) => d.meta.carriedForwardFrom);
+  if (carried.length) {
+    notes.push(`The ${S.meta.baseYear} values for ${listOf(carried.map((d) => d.meta.label))}`
+      + ` are carried forward from the last published round rather than measured.`);
+  }
+  if (res.clipped) {
+    notes.push(`${res.clipped} extreme value${res.clipped === 1 ? " is" : "s are"} outside`
+      + ` the plotted range and not drawn, but still counted.`);
+  }
+  for (const sk of res.skipped ?? []) {
+    const m = S.outcomes[sk.key];
+    notes.push(sk.why === "nosex"
+      ? `${m.label} has no panel for ${sexWord}: it is published for both sexes only.`
+      : `${m.label} has only ${sk.n} countries with a value — too few for a distribution.`);
+  }
+  notes.push(...supplementaryNotes({ ...o, levels: true }, state.highlight));
+  return notes.filter(Boolean).join(" ");
+}
+
+// The years each panel is measured over. Every indicator now ends in 2025, so this is one
+// range for the whole figure — but it is derived per indicator rather than assumed, because
+// the moment one source lags the panels stop sharing a window and a single range would be
+// wrong for whichever one moved.
+function distWindowYears(res) {
+  const off = S.meta.trendWindows[state.fig3.window];
+  if (!off) return "";
+  const spans = new Map();
+  for (const d of res.drawn) {
+    const s = `${d.meta.latestYear + off[0]}–${d.meta.latestYear + off[1]}`;
+    if (!spans.has(s)) spans.set(s, []);
+    spans.get(s).push(d.meta.short);
+  }
+  if (spans.size === 1) return [...spans.keys()][0];
+  return [...spans].map(([s, ks]) => `${s} for ${ks.join(" and ")}`).join(", ");
+}
+
+// What the target actually is, in each panel's own units, and where the line comes from.
+//
+// It used to be described only as "half the gap", which is exact but abstract: on every
+// indicator aiming at zero the gap IS the value, so "halve the gap" is a roundabout way of
+// saying "halve it". Stated by RULE rather than by listing the panels it applies to —
+// several labels contain a comma ("Mortality, 1–59 months"), so a list of four of them
+// reads as seven items.
+function distTargetSentences(res) {
+  const sex = state.fig3.sex;
+  const zero = res.drawn.filter((d) => d.meta.goalpostBasis === "zero");
+  const gain = res.drawn.filter((d) => d.meta.trendRule === "linear");
+  const out = [];
+
+  if (zero.length) {
+    out.push(`The target is to halve the ${zero[0].meta.latestYear} value by`
+      + ` ${S.meta.targetYear}.`);
+  }
+  if (gain.length) {
+    const g = gain[0];
+    const t = g.meta.target?.[sex];
+    out.push(`${listOf(gain.map((d) => d.meta.label))} ${gain.length > 1 ? "are" : "is"} the`
+      + ` exception: ${gain.length > 1 ? "they aim" : "it aims"} at a rise of`
+      + `${t != null ? ` ${num(t)} cm` : " a fixed amount"} instead — half the largest`
+      + ` ${S.meta.targetYear - g.meta.latestYear}-year gain on record,`
+      + ` ${g.meta.goalpostHolder["3"].label}'s in`
+      + ` ${g.meta.goalpostHolder["3"].from}–${g.meta.goalpostHolder["3"].to}.`);
+  }
+  const best = res.drawn.filter((d) => d.meta.goalpostBasis === "best value on record");
+  for (const d of best) {
+    const h = d.meta.goalpostHolder?.[sex];
+    out.push(`${d.meta.label} aims instead at halving the gap to the best value on record,`
+      + ` ${num(d.meta.goalpost?.[sex])}%${h ? ` (${h.label}, ${h.year})` : ""}.`);
+  }
+  if (!out.length) return [];
+
+  // Every panel reads as improvement now, so on-track is the right-hand side on all of them.
+  // It used to flip on height, which was the one panel whose good side was the other one.
+  out.push(`The vertical line is the annual pace a country would have to hold from`
+    + ` ${res.drawn[0].meta.latestYear} to reach that, with on-track countries to its right.`);
+  return out;
+}
+
+// What the distribution figure has to admit. None of these is decoration: what the panels
+// show, what the target is, which countries are in them, which side of the line is good,
+// and that the axis is trimmed.
+function distributionNote(res) {
+  const o = state.fig3;
+  const sexWord = o.sex === "3" ? "both sexes combined"
+    : o.sex === "1" ? "males" : "females";
+  const notes = [
+    `Each panel is the distribution of the average annual rate of improvement across`
+    + ` countries ${distWindowYears(res)} for ${sexWord}. Improvement is signed so that`
+    + ` better is positive: for the indicators that aim to fall it is the annual rate of`
+    + ` decline, so a country getting worse sits below zero.`,
+    ...distTargetSentences(res),
+    highlightNote(res),
+  ];
+  if (res.clipped) {
+    notes.push(`${res.clipped} extreme value${res.clipped === 1 ? " is" : "s are"} outside`
+      + ` the plotted range and not drawn, but still counted.`);
+  }
+  // Why a panel a reader expected is not there. "nosex" is the one that needs saying most:
+  // it appears only when the reader switches to Male or Female, and the indicator that
+  // vanishes is the one whose absence looks most like a fault.
+  for (const s of res.skipped ?? []) {
+    const m = S.outcomes[s.key];
+    if (s.why === "once") {
+      notes.push(`${m.label} is measured once, so it has no annual change and no panel here.`);
+    } else if (s.why === "nosex") {
+      notes.push(`${m.label} has no panel for ${sexWord}: it counts every 15-year-old not`
+        + ` in school or not sampled, which needs a coverage figure OECD does not publish`
+        + ` by sex. The supplementary "${S.outcomes.math_students?.label ?? "tested students"}"`
+        + ` row is the same proficiency floor measured only on the students PISA tested,`
+        + ` and that one does split by sex.`);
+    } else {
+      notes.push(`${m.label} has only ${s.n} countries with a trend on this window — too`
+        + ` few for a distribution — so it has no panel here.`);
+    }
+  }
+  return notes.filter(Boolean).join(" ");
+}
+
+function renderFig2() {
+  // A chart measures its container, which is zero-width inside a closed section, so
+  // there is nothing useful to draw until it opens.
+  if (!$("#sec2").open) return;
+  const byOutcome = state.fig2.layout === "indicators";
+  // Two controls have nothing left to act on once every indicator is a panel of its own,
+  // so they are disabled rather than left live and quietly ignored. The tercile split is
+  // the second one: grouping rows inside each indicator panel would be panels in panels.
+  $("#outcome2").disabled = byOutcome;
+  for (const i of $("#sec2").querySelectorAll("fieldset[data-role='panels'] input")) {
+    i.disabled = byOutcome;
+  }
+  // The 720px cap stops ONE chart's rows becoming long and thin; panels sharing the width
+  // have the opposite problem, so the grid is allowed the full column.
+  $("#fig2").classList.toggle("chart-host-wide", byOutcome);
+
+  const meta = S.outcomes[state.outcome];
+  const shown = [...state.locs, ...comparators()];
+  if (!shown.length) {
+    $("#fig2").textContent = "";
+    emptyFigure($("#fig2"), "No locations selected. Choose one above, or add a comparator.");
+    setNote("#fig2-note", "");
+    return;
+  }
+  // This used to be built once at startup, into a div beside the chart. It now goes
+  // inside the chart host, next to the table, and the host is cleared on every render —
+  // so it is rebuilt here instead. The getters still read at click time, because the
+  // figure under it changes with every indicator, layout and selection.
+  const fig2Download = (layout) => figureDownload(
+    optionsPanel($("#fig2")),
+    () => $("#fig2").querySelector("svg.prospect-svg"),
+    () => state.fig2.layout === "indicators"
+      ? `five-indicators-${[...state.locs, ...comparators()].length}-locations`
+      : `${S.outcomes[state.outcome].label}-comparison`,
+    () => ({
+      title: state.fig2.layout === "indicators"
+        ? `Five indicators, a panel each: prospects by ${S.meta.targetYear}`
+        : `${fullName(S.outcomes[state.outcome])}: prospects by ${S.meta.targetYear}`,
+      notes: $("#fig2-note").textContent,
+    }),
+    layout,
+  );
+
+  // All five indicators at once, a panel each — the same small multiples the figure above
+  // draws, over this figure's rows: the selection and its comparators.
+  if (byOutcome) {
+    const cfg = {
+      summary: S, locations: L, locationList: shown, ...state.fig2,
+      outcomeList: outcomesFor(state.fig2),
+      gridBy: "outcome", panelBy: null,
+      title: `${indicatorsPhrase(state.fig2)}, a panel each: prospects by ${S.meta.targetYear}`,
+    };
+    prospectGrid($("#fig2"), cfg);
+    fig2Download({ draw: (h, o) => prospectGrid(h, { ...cfg, ...o }),
+      maxCols: cfg.outcomeList.length });
+    setNote("#fig2-note", fiveIndicatorNote(state.fig2, shown));
+    return;
+  }
+  const cfg = {
+    mode: "locations", summary: S, locations: L, outcome: state.outcome,
+    locationList: shown, ...state.fig2,
+    title: `${fullName(meta)}: prospects by ${S.meta.targetYear}`,
+  };
+  prospectChart($("#fig2"), cfg);
+  fig2Download({ draw: (h) => prospectChart(h, cfg) });
+  const panelled = !!state.fig2.panelBy;
+  const notes = [state.fig2.rowScale === "shared"
+    ? (panelled
+      ? "Each panel runs from the highest value in that panel to the goal, so it carries its"
+        + " own axis — one axis cannot describe three rulers. Read position within a panel"
+        + " and the numbers between them."
+      : "All rows share one scale, so the left edge is the same value for every row and each"
+        + " dot is labeled with its own.")
+    : "Each row starts at its own most recent value, so the arrows show progress toward the"
+      + " goal rather than differences in level."
+      + (panelled ? " Every panel reads against the same per-cent axis." : "")];
+  if (panelled) notes.push(tercileNote());
+  // The same indicator explanation the figure above carries, restricted to the one drawn
+  // here — this note used to be two sentences beside that figure's twelve.
+  notes.push(...indicatorNotes([state.outcome], state.fig2, shown));
+  setNote("#fig2-note", notes.filter(Boolean).join(" "));
+}
+
+function syncUrl() {
+  const u = new URLSearchParams();
+  if (state.locs.join(",") !== "NGA") u.set("loc", state.locs.join(","));
+  if (state.outcome !== "nnm") u.set("indicator", state.outcome);
+  if (state.comparators) u.set("vs", state.comparators.join(","));
+  if (state.highlight.length) u.set("hl", state.highlight.join(","));
+  history.replaceState(null, "", u.toString() ? `?${u}` : location.pathname);
+}
+
+locationPicker($("#picker"), L.locations, state.locs, (next) => {
+  // No fallback to Nigeria. Deselecting everything used to leave the default location on
+  // screen with nothing in the picker saying so, which reads as a figure about a country
+  // the reader did not choose.
+  state.locs = next;
+  renderFig1(); paintCompChips(); renderFig2(); syncUrl();
+});
+
+wirePanel("#sec1", "fig1", renderFig1);
+wirePanel("#sec2", "fig2", renderFig2);
+wirePanel("#sec3", "fig3", renderFig3);
+wirePanel("#sec4", "fig4", renderFig4);
+wirePanel("#sec5", "fig5", renderFig5);
+
+$("#outcome2").addEventListener("change", (e) => {
+  state.outcome = e.target.value; renderFig2(); syncUrl();
+});
+
+// A chart measures its container, which is zero-width inside a closed <details>, so
+// it has to be drawn again when the section opens.
+$("#sec1").addEventListener("toggle", () => { if ($("#sec1").open) renderFig1(); });
+$("#sec2").addEventListener("toggle", () => { if ($("#sec2").open) renderFig2(); });
+$("#sec3").addEventListener("toggle", () => { if ($("#sec3").open) renderFig3(); });
+$("#sec4").addEventListener("toggle", () => { if ($("#sec4").open) renderFig4(); });
+$("#sec5").addEventListener("toggle", () => { if ($("#sec5").open) renderFig5(); });
+$("#outcome4").addEventListener("change", (e) => {
+  state.outcome4 = e.target.value; renderFig4(); syncUrl();
+});
+
+let t;
+addEventListener("resize", () => {
+  clearTimeout(t);
+  t = setTimeout(() => { renderFig1(); renderFig2(); renderFig3(); renderFig5(); }, 150);
+});
+
+paintCompChips();
+paintHighlightChips();
+renderFig1();
+renderFig2();
+renderFig3();
+renderFig4();
+renderFig5();
+</script>
+</body>
+</html>
